@@ -25,9 +25,7 @@ class GuestBook
        // Creates the directory if it doesn't exist, and sets permissions
         if (!is_dir($directory)) {
             mkdir($directory, 0777, true); // Creates the directory recursively
-        } else {
-            chmod($directory, 0777); // Changes the directory permissions
-        }
+        } 
 
         // Creates the file if it doesn't exist, and sets permissions
         if (!file_exists($file)) {

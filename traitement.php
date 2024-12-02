@@ -1,4 +1,3 @@
-
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
 
@@ -13,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $message = new Message($_POST['username'] ?? '', $_POST['message'] ?? '');
 
     // Get the path to the message file
-    $file = __DIR__ . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . 'message';
+    $file = '/tmp/message'; // Répertoire temporaire accessible;
 
     // Create a new GuestBook instance
     $guestbook = new GuestBook($file);
@@ -43,3 +42,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Redirect to the index page
     header('Location: index.php');
 }
+?>
