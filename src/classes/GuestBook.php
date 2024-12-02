@@ -7,6 +7,7 @@ use Exception;
 use App\classes\Message;
 
 class GuestBook
+
 {
     private string $file;
 
@@ -20,12 +21,18 @@ class GuestBook
     public function __construct(string $file)
     {
         $directory = dirname($file);
+
+       // Creates the directory if it doesn't exist, and sets permissions
         if (!is_dir($directory)) {
-            mkdir($directory, 0777, true); // Create directory recursively
+            mkdir($directory, 0777, true); // Creates the directory recursively
+        } else {
+            chmod($directory, 0777); // Changes the directory permissions
         }
 
+        // Creates the file if it doesn't exist, and sets permissions
         if (!file_exists($file)) {
-            touch($file); // Create the file if it doesn't exist
+            touch($file); // Creates the file if it doesn't exist
+            chmod($file, 0666); // Sets write permissions for the file
         }
 
         $this->file = $file;
