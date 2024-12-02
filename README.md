@@ -3,7 +3,7 @@
 A simple Guestbook project developed in PHP, allowing users to dynamically submit and display messages. This project aims to illustrate PHP basics and several advanced concepts for building web applications.
 
 ## Link 
-Guestbook link : https://guestbook-pkh4.onrender.com/index.php
+Guestbook link : https://guestbook-pkh4.onrender.com
 
 ---
 
