@@ -1,4 +1,5 @@
 <?php
+
 namespace App\classes;
 
 use DateTime;
@@ -9,24 +10,46 @@ class GuestBook
 {
     private string $file;
 
+    /**
+     * Constructs a new GuestBook instance.
+     *
+     * @param string $file The path to the file where messages are stored.
+     *
+     * Ensures the file and its directory exist, creating them if necessary.
+     */
     public function __construct(string $file)
     {
         $directory = dirname($file);
         if (!is_dir($directory)) {
-            mkdir($directory, 0777, true);
-        } 
+            mkdir($directory, 0777, true); // Create directory recursively
+        }
+
         if (!file_exists($file)) {
-            touch($file);
+            touch($file); // Create the file if it doesn't exist
         }
 
         $this->file = $file;
     }
 
+    /**
+     * Adds a new message to the guestbook.
+     *
+     * @param Message $message The message to add.
+     *
+     * Appends the JSON representation of the message to the file.
+     */
     public function addMessage(Message $message): void
     {
-        file_put_contents($this->file, $message->toJSON() . PHP_EOL , FILE_APPEND);
+        file_put_contents($this->file, $message->toJSON() . PHP_EOL, FILE_APPEND);
     }
 
+    /**
+     * Retrieves all messages from the guestbook.
+     *
+     * Reads the file, parses each line as a JSON string, and creates Message objects.
+     *
+     * @return Message[] An array of Message objects.
+     */
     public function getMessages(): array
     {
         $content = trim(file_get_contents($this->file));
@@ -37,28 +60,18 @@ class GuestBook
             $messages[] = Message::fromJSON($line);
         }
 
-    
-
         return $messages;
     }
 
-    /**
-     * Get the value of file
-     */ 
-    public function getFile()
+    // Getters and setters for the file property
+    public function getFile(): string
     {
         return $this->file;
     }
 
-    /**
-     * Set the value of file
-     *
-     * @return  self
-     */ 
-    public function setFile($file)
+    public function setFile(string $file): self
     {
         $this->file = $file;
-
         return $this;
     }
 }

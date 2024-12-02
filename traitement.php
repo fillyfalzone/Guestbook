@@ -1,40 +1,44 @@
-<?php 
+<?php
 require_once __DIR__ . '/vendor/autoload.php';
 
 use App\classes\GuestBook;
 use App\classes\Message;
+
 session_start();
 
+// Check if the form has been submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Création d'un nouveau message
+    // Create a new message object from the posted data
     $message = new Message($_POST['username'] ?? '', $_POST['message'] ?? '');
 
-     // Direction du fichier
-     $file = __DIR__ . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . 'message';
-     // On instancie le livre d'or
-     $guestbook = new GuestBook($file);
+    // Get the path to the message file
+    $file = __DIR__ . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . 'message';
 
+    // Create a new GuestBook instance
+    $guestbook = new GuestBook($file);
+
+    // Check if the message is valid
     if ($message->isValid()) {
-       
-        // On ajoute un message
+        // Add the message to the guestbook
         $guestbook->addMessage($message);
-        
-        // Message valide - rediriger avec un message flash de succès
-        $_SESSION['success'] = "Le message a été soumis avec succès !";
-        unset($_SESSION['form_data']); // Nettoyer les données de formulaire précédentes
+
+        // Set a success message and redirect to the index page
+        $_SESSION['success'] = "The message has been submitted successfully!";
+        unset($_SESSION['form_data']); // Clear previous form data
     } else {
-        // Message invalide - enregistrer les erreurs et données
+        // Set error messages and redirect to the index page
         $_SESSION['error'] = $message->getErrors();
-        $_SESSION['form_data'] = $_POST; // Sauvegarder les données du formulaire
+        $_SESSION['form_data'] = $_POST; // Save form data for repopulation
         header('Location: index.php');
         exit;
     }
 
-     // On récupère les messages pour affichage 
-     $messages = $guestbook->getMessages();
-        
-     // Sauvegarder 
-     $_SESSION['messages'] = $messages;
+    // Retrieve all messages from the guestbook
+    $messages = $guestbook->getMessages();
 
-     header('Location: index.php');
+    // Save messages to the session for display on the index page
+    $_SESSION['messages'] = $messages;
+
+    // Redirect to the index page
+    header('Location: index.php');
 }
