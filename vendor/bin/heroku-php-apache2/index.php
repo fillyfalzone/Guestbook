@@ -40,7 +40,7 @@ require_once 'elements/header.php';
 
     <h1>Guestbook</h1>
 
-    <form action="traitement.php" method="post">
+    <form action=<?= __DIR__?>"traitement.php" method="post">
         <div class="form-group">
             <input type="text" name="username" placeholder="Username" required class="form-control my-2 <?= isset($errors['username']) ? 'is-invalid' : '' ?>" value="<?= htmlentities($formData['username']) ?>">
             <?php if (isset($errors['username'])): ?>

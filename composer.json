@@ -1,5 +1,11 @@
-
 {
+    "name": "my-vendor/guestbook",
+    "description": "Guestbook in PHP",
+    "require": {
+        "php": "^8.2",
+        "ext-pdo": "*",
+        "ext-pdo_mysql": "*"
+    },
     "autoload": {
         "psr-4": {
             "App\\": "src/"
